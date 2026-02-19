@@ -113,7 +113,7 @@
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "../../../../Downloads/FMP3")
+			(outputdirectory "../../../../Downloads/FMP3_PLAYER")
 		)
 	)
 	(net 0 "")
