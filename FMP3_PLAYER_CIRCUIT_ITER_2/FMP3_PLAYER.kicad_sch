@@ -7231,6 +7231,16 @@
 	)
 	(wire
 		(pts
+			(xy 264.16 27.94) (xy 264.16 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5859a864-aeaf-41a5-b2e0-1c9e29b52961")
+	)
+	(wire
+		(pts
 			(xy 233.68 82.55) (xy 241.3 82.55)
 		)
 		(stroke
@@ -7318,16 +7328,6 @@
 			(type default)
 		)
 		(uuid "63e10c7f-bc01-4559-bfe4-d31ac021f1f4")
-	)
-	(wire
-		(pts
-			(xy 266.7 68.58) (xy 266.7 30.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "653b8ce0-bce6-4393-9b2b-412c555f8313")
 	)
 	(wire
 		(pts
@@ -7788,16 +7788,6 @@
 			(type default)
 		)
 		(uuid "9b4fd95b-8d24-45db-a579-2e732a44c8a0")
-	)
-	(wire
-		(pts
-			(xy 264.16 45.72) (xy 264.16 27.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9c9fbf8d-a909-4fd6-b83d-5980a3e6c12c")
 	)
 	(wire
 		(pts
@@ -8428,6 +8418,16 @@
 			(type default)
 		)
 		(uuid "eba39442-253d-447a-a274-c0febdebef35")
+	)
+	(wire
+		(pts
+			(xy 266.7 30.48) (xy 266.7 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ec363f28-80dd-4022-b3c9-b8732ec35f63")
 	)
 	(wire
 		(pts
@@ -9573,6 +9573,75 @@
 			(project "FMP3_PLAYER"
 				(path "/a3d3848e-8dd1-4cdc-911f-454b6af41ad0"
 					(reference "#PWR014")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Small")
+		(at 266.7 66.04 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "19361570-d660-40f2-b3e2-22e86aad923b")
+		(property "Reference" "C14"
+			(at 269.24 64.7762 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n"
+			(at 269.24 67.3162 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 266.7 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 266.7 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor, small symbol"
+			(at 266.7 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "66a2a485-9301-49de-a990-797e3ad22be3")
+		)
+		(pin "1"
+			(uuid "02176dda-a242-42f4-8dda-d2c6e65dc7ba")
+		)
+		(instances
+			(project "FMP3_PLAYER"
+				(path "/a3d3848e-8dd1-4cdc-911f-454b6af41ad0"
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -14899,6 +14968,75 @@
 			(project "FMP3_PLAYER"
 				(path "/a3d3848e-8dd1-4cdc-911f-454b6af41ad0"
 					(reference "SW6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Small")
+		(at 264.16 43.18 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f6a16f60-3be2-46c2-95ac-23543bb5329d")
+		(property "Reference" "C13"
+			(at 258.826 37.592 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100n"
+			(at 258.826 40.132 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 264.16 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 264.16 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor, small symbol"
+			(at 264.16 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "7f6a11fb-41e4-4a4f-b347-8121cafe67e8")
+		)
+		(pin "1"
+			(uuid "feb7e24b-bd5a-4f48-ba5d-2a70fcb12941")
+		)
+		(instances
+			(project "FMP3_PLAYER"
+				(path "/a3d3848e-8dd1-4cdc-911f-454b6af41ad0"
+					(reference "C13")
 					(unit 1)
 				)
 			)

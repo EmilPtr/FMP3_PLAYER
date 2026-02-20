@@ -10,11 +10,7 @@
 #define FM_TRANSISTOR_PIN A1
 #define BUTTON_OK 13
 #define BUTTON_UP 12
-
-SoftwareSerial softSerial(/*rx =*/A3, /*tx =*/A2);
-
-void(* reset) (void) = 0; // declare reset function at address 0
-
+#define START_FREQUENCY 8750
 
 RDA5807M radio;
 DFRobotDFPlayerMini mp3;
@@ -22,7 +18,7 @@ LiquidCrystal lcd(3, 2, 4, 5, 6, 7);
 
 
 unsigned short volumeMP3 = 10; // Min: 0, Max: 30
-unsigned short volumeFM = 5;  // Min: 0, Max: 15
+unsigned short volumeFM = 15;  // Min: 0, Max: 15
 
 
 char* FM_frequency_str;
@@ -42,14 +38,19 @@ void initFM() {
 
   Serial.println("Initializing FM radio...");
 
+  radio._wireDebug(true);
+  radio.debugEnable(true);
+
   if (!radio.initWire(Wire)) {
     Serial.println("Couldn't find RDA5807M");
-    reset();  
+    while (1);
   }
 
   radio.setBand(FIX_BAND);
   radio.setMono(false);
   radio.setMute(false);
+
+  radio.setFrequency(START_FREQUENCY); // Set initial frequency to 87.5 MHz
 
   radio.setVolume(volumeFM);
   Serial.println("FM radio initialized.");
@@ -146,20 +147,31 @@ void setup() {
   lcd.begin(16, 2);
   lcd.print("Initializing...");
   delay(1000);
-  initMP3();
+  initFM();
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Done.");
 }
 
 void loop() {
-  if (mp3.available()) {
-    printDetail(mp3.readType(), mp3.read()); //Print the detail message from DFPlayer to handle different errors and states.
-  }
+  //if (mp3.available()) {
+  //  printDetail(mp3.readType(), mp3.read()); //Print the detail message from DFPlayer to handle different errors and states.
+  //}
   if (digitalRead(BUTTON_OK) == HIGH) {
-    mp3.play(1); // Play the first track on the SD card when the button is pressed
+    radio.seekUp();
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(radio.getFrequency());
   }
   if (digitalRead(BUTTON_UP) == HIGH) {
-    mp3.next();
+    radio.seekDown();
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(radio.getFrequency());
   }
+
+  radio.debugRadioInfo();
+  radio.debugAudioInfo();
+
+  delay(250);
 }
