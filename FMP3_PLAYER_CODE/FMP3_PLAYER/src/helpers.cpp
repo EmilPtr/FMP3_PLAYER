@@ -14,6 +14,12 @@
 #define BUTTON_RIGHT 10
 #define BUTTON_LEFT 9
 
+void print_lcd_message(LiquidCrystal& lcd, const char* message) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(message);
+}
+
 void initFM(RDA5807M& radio, LiquidCrystal& lcd) {
   digitalWrite(FM_TRANSISTOR_PIN, HIGH); // Turn on the transistor to power the FM radio
 
@@ -35,10 +41,10 @@ void initFM(RDA5807M& radio, LiquidCrystal& lcd) {
 
 void initMP3(DFRobotDFPlayerMini& mp3, LiquidCrystal& lcd) {
   digitalWrite(MP3_TRANSISTOR_PIN, HIGH); // Turn on the transistor to power the MP3 player
+  print_lcd_message(lcd, "Initializing MP3...");
 
   if (!mp3.begin(Serial, true, true)) {
-    lcd.setCursor(0, 0);
-    lcd.print("Unable to begin MP3 player:");
+    print_lcd_message(lcd, "MP3 Init Failed");
     while(1);
   }
   delay(1000);
@@ -62,10 +68,4 @@ bool buttonPressDB(int buttonPin) {
         }
     }
     return false;
-}
-
-void print_lcd_message(LiquidCrystal& lcd, const char* message) {
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print(message);
 }

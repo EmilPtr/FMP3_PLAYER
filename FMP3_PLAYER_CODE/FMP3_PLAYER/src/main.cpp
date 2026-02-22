@@ -30,9 +30,9 @@ AudioSource currentAudioSource = MP3_PLAYER;
 void setup() {
   Serial.begin(9600);
   lcd.begin(16, 2);
-  print_lcd_message(lcd, "Initializing...");
+  print_lcd_message(lcd, "Starting...");
   delay(1000);
-  initFM(radio, lcd);
+  initMP3(mp3, lcd);
   print_lcd_message(lcd, "Done.");
 }
 
