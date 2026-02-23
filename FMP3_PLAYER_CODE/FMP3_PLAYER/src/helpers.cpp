@@ -21,12 +21,15 @@ void print_lcd_message(LiquidCrystal& lcd, const char* message) {
 }
 
 void initFM(RDA5807M& radio, LiquidCrystal& lcd) {
-  digitalWrite(FM_TRANSISTOR_PIN, HIGH); // Turn on the transistor to power the FM radio
+  digitalWrite(FM_TRANSISTOR_PIN, LOW); // Turn on the transistor to power the FM radio
+  digitalWrite(MP3_TRANSISTOR_PIN, HIGH); // Turn off the MP3 player
+  print_lcd_message(lcd, "Initializing FM...");
 
   radio._wireDebug(true);
   radio.debugEnable(true);
 
   if (!radio.initWire(Wire)) {
+    print_lcd_message(lcd, "FM Init Failed");
     while (1);
   }
 
@@ -40,7 +43,8 @@ void initFM(RDA5807M& radio, LiquidCrystal& lcd) {
 }
 
 void initMP3(DFRobotDFPlayerMini& mp3, LiquidCrystal& lcd) {
-  digitalWrite(MP3_TRANSISTOR_PIN, HIGH); // Turn on the transistor to power the MP3 player
+  digitalWrite(MP3_TRANSISTOR_PIN, LOW); // Turn on the transistor to power the MP3 player
+  digitalWrite(FM_TRANSISTOR_PIN, HIGH); // Turn off the FM radio
   print_lcd_message(lcd, "Initializing MP3...");
 
   if (!mp3.begin(Serial, true, true)) {
@@ -59,13 +63,29 @@ void initButtons() {
     pinMode(BUTTON_LEFT, INPUT);
 }
 
-bool buttonPressDB(int buttonPin) {
+/**
+ * Check if a button is pressed and held for a certain duration.
+ * Returns 1 if the button is pressed normally, and 2 if held for over 3 seconds, otherwise returns 0.
+ */
+int buttonPressDB(int buttonPin) {
+    int holdTime = 200;
     if (digitalRead(buttonPin) == HIGH) {
+
         delay(200); // Debounce delay
+
         if (digitalRead(buttonPin) == HIGH) {
-            while (digitalRead(buttonPin) == HIGH); // Wait for button release
-            return true;
+
+            while (digitalRead(buttonPin) == HIGH) {
+                holdTime++;
+                delay(1);
+            }
+
+            if (holdTime >= 3000) {
+                return 2;
+            }
+
+            return 1;
         }
     }
-    return false;
+    return 0;
 }
