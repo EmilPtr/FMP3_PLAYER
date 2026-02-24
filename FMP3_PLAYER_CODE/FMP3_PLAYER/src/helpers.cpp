@@ -33,8 +33,8 @@ void initFM(RDA5807M& radio, LiquidCrystal& lcd) {
   radio.setMono(false);
   radio.setMute(false);
 
-  radio.setFrequency(START_FREQUENCY); // Set initial frequency to 87.5 MHz
-
+  radio.setFrequency(START_FREQUENCY); // Set initial frequency to 88.1 MHz
+  print_lcd_message(lcd, "FM Initialized");
   radio.setVolume(START_VOLUME_FM);
 }
 
@@ -52,6 +52,8 @@ void initMP3(DFRobotDFPlayerMini& mp3, LiquidCrystal& lcd) {
     print_lcd_message(lcd, "MP3 Init Failed");
     while(1);
   }
+
+  print_lcd_message(lcd, "MP3 Initialized");
   delay(1000);
   mp3.volume(START_VOLUME_MP3);
 }
@@ -168,8 +170,9 @@ unsigned short decreaseVolume(AudioSource source, unsigned short currentVolume, 
 void printMP3Status(LiquidCrystal& lcd, DFRobotDFPlayerMini& mp3, unsigned short volumeMP3) {
   int currentFile = mp3.readCurrentFileNumber();
 
+  lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Playing MP3 | ");
+  lcd.print("MP3 | ");
   lcd.print(currentFile);
   lcd.setCursor(0, 1);
   char volStr[3];
@@ -195,8 +198,9 @@ void printMP3Status(LiquidCrystal& lcd, DFRobotDFPlayerMini& mp3, unsigned short
 void printFMStatus(LiquidCrystal& lcd, RDA5807M& radio, unsigned short volumeFM) {
   int currentFrequency = radio.getFrequency();
 
+  lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Playing FM | ");
+  lcd.print("FM | ");
   lcd.print(currentFrequency);
   lcd.setCursor(0, 1);
   char volStr[3];

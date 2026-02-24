@@ -8,20 +8,20 @@ RDA5807M radio;
 DFRobotDFPlayerMini mp3;
 LiquidCrystal lcd(3, 2, 4, 5, 6, 7);
 
-bool isActive = false;
+bool isActive = true;
 bool isMP3PlayerShuffle = false;
 
 unsigned short volumeMP3 = START_VOLUME_MP3; // Min: 0, Max: 30
 unsigned short volumeFM = START_VOLUME_FM;  // Min: 0, Max: 15
 
-AudioSource currentAudioSource = MP3_PLAYER;
+AudioSource currentAudioSource = FM_RADIO;
 
 void setup() {
   Serial.begin(9600);
   lcd.begin(16, 2);
   print_lcd_message(lcd, "Starting...");
   delay(1000);
-  initMP3(mp3, lcd);
+  initFM(radio, lcd);
   print_lcd_message(lcd, "Done.");
 }
 
@@ -37,16 +37,24 @@ void loop() {
     pauseOrPlayDevice(currentAudioSource, isActive, radio, mp3);
   } else if (buttonOkState == BUTTON_HELD) {
     currentAudioSource = (currentAudioSource == MP3_PLAYER) ? FM_RADIO : MP3_PLAYER;
-    isActive = true; // Automatically play the new source when switching
+    isActive = true; // Automatically stop the new source when switching
     switchAudioSource(currentAudioSource, radio, mp3, lcd);
   } 
   
   else if (buttonUpState == BUTTON_NORMAL) {
-    increaseVolume(currentAudioSource, volumeMP3, radio, mp3);
+    if (currentAudioSource == MP3_PLAYER) {
+      volumeMP3 = increaseVolume(currentAudioSource, volumeMP3, radio, mp3);
+    } else {
+      volumeFM = increaseVolume(currentAudioSource, volumeFM, radio, mp3);
+    }
   }
 
   else if (buttonDownState == BUTTON_NORMAL) {
-    decreaseVolume(currentAudioSource, volumeMP3, radio, mp3);
+    if (currentAudioSource == MP3_PLAYER) {
+      volumeMP3 = decreaseVolume(currentAudioSource, volumeMP3, radio, mp3);
+    } else {
+      volumeFM = decreaseVolume(currentAudioSource, volumeFM, radio, mp3);
+    }
   }
 
   else if (buttonRightState == BUTTON_NORMAL) {
@@ -74,6 +82,17 @@ void loop() {
   } else {
     print_lcd_message(lcd, "Paused");
   }
-  
+
+  if (currentAudioSource == FM_RADIO) {
+    lcd.setCursor(15, 0);
+    lcd.print("F");
+  } else if (currentAudioSource == MP3_PLAYER) {
+    lcd.setCursor(15, 0);
+    lcd.print("M");
+  }
+
+  radio.debugRadioInfo();
+  Serial.println(radio.getFrequency());
+
   delay(10);
 }
